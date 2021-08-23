@@ -4,9 +4,6 @@ on:
   workflow_dispatch:
   
 jobs:
-  env:
-    PACKAGE: plaemoon-bin
-    REPO: community
   build_package:
     runs-on: ubuntu-20.04
     steps:
@@ -77,6 +74,9 @@ jobs:
           sudo ./install.sh "PACKAGER = Manjaro Build Server <build@manjaro.org>"
           popd
       - id: clone_repo
+        env:
+          PACKAGE: plaemoon-bin
+          REPO: community
         run: |
           sudo git clone https://gitlab.manjaro.org/packages/${REPO}/${PACKAGE}.git
       - id: build_package
