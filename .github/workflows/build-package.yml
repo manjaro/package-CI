@@ -75,7 +75,7 @@ jobs:
           popd
       - id: clone_repo
         env:
-          PACKAGE: plaemoon-bin
+          PACKAGE: palemoon-bin
           REPO: community
         run: |
           sudo git clone https://gitlab.manjaro.org/packages/${REPO}/${PACKAGE}.git
