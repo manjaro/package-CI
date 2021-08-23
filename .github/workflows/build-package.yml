@@ -82,7 +82,7 @@ jobs:
       - id: build_package
         run: |
           sudo chrootbuild -p ${PACKAGE}
-    - id: publish_package
+      - id: publish_package
         shell: bash -O extglob {0}
         run: |
           _ver=$(grep ^pkgver= ${PACKAGE}/PKGBUILD | cut -d'=' -f2)
