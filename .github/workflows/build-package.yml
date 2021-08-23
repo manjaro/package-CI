@@ -82,7 +82,7 @@ jobs:
           PACKAGE: palemoon-bin
           REPO: community
         run: |
-          sudo git clone https://gitlab.manjaro.org/packages/${{ matrix.repo }}}/${{ matrix.package }}.git
+          sudo git clone https://gitlab.manjaro.org/packages/${{ matrix.repo }}/${{ matrix.package }}.git
       - id: build_package
         run: |
           sudo chrootbuild -p ${PACKAGE}
