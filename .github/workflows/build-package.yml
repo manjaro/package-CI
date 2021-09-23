@@ -10,8 +10,9 @@ jobs:
       matrix:  
         PACKAGE: [palemoon-bin]
         REPO: [community]
+        BRANCH: [unstable]
     steps:
-      - id: install_build-dependencies
+      - name: install_build-dependencies
         run: |
           sudo apt-get update
           sudo apt-get install \
@@ -28,7 +29,7 @@ jobs:
           python3-pip
           sudo pip3 install meson
           sudo pip3 install ninja
-      - id: install_pacman
+      - name: install_pacman
         env:
           PACMAN_VERSION: 6.0.1
         run: |
@@ -53,7 +54,7 @@ jobs:
           sudo mkdir -p /etc/pacman.d
           sudo touch /etc/pacman.d/mirrorlist
           popd
-      - id: install_keyrings
+      - name: install_keyrings
         run: |
           sudo git clone --depth 1 https://gitlab.manjaro.org/packages/core/manjaro-keyring.git
           pushd manjaro-keyring
@@ -71,30 +72,36 @@ jobs:
           popd
           sudo pacman-key --init
           sudo pacman-key --populate archlinux manjaro
-      - id: install_manjaro-chrootbuild
+      - name: install_manjaro-chrootbuild
         run: |
           sudo git clone --depth 1 https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
           pushd manjaro-chrootbuild
           sudo ./install.sh "PACKAGER = Manjaro Build Server <build@manjaro.org>"
           popd
-      - id: clone_repo
+      - name: clone_repo
         env:
           PACKAGE: palemoon-bin
           REPO: community
         run: |
           sudo git clone https://gitlab.manjaro.org/packages/${{ matrix.repo }}/${{ matrix.package }}.git
-      - id: build_package
+      - name: build_package
         run: |
           sudo chrootbuild -p ${{ matrix.package }}
-      - id: gpg_sign
+      - name: gpg_sign
         shell: bash -O extglob {0}
         run: |
-          echo "## gpg signing"
           cat <(echo -e "${{ secrets.CI_PRIV_KEY }}" | base64 --decode) | gpg --batch --import &>/dev/null
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
             gpg --pinentry-mode loopback --passphrase "${{ secrets.CI_GPG_PASSPHRASE }}" --detach-sign ${p}
           done
-      - id: publish_package
+      - name: create_transaction_file
+        shell: bash -O extglob {0}
+        run: |
+          echo "sha256_pkg: $(sha256sum ${{ matrix.package }}*.zst | cut -d' ' -f1)" > tranaction.yml
+          echo "sha256_sig: $(sha256sum ${{ matrix.package }}*.sig | cut -d' ' -f1)" >> tranaction.yml
+          echo "repository: ${{ matrix.repo }}" >> tranaction.yml
+          echo "branch: ${{ matrix.BRANCH }}" >> tranaction.yml
+      - name: publish_package
         shell: bash -O extglob {0}
         run: |
           _ver=$(grep ^pkgver= ${{ matrix.package }}/PKGBUILD | cut -d'=' -f2)
@@ -105,3 +112,4 @@ jobs:
           GITHUB_LINK=https://github.com/${GITHUB_REPOSITORY}/releases/download/${_tag}
           gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst
           gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.sig
+          gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.yml
