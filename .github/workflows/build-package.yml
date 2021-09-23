@@ -1,4 +1,4 @@
-name: 'Manjaro Package CI'
+name: 'build package'
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ jobs:
         REPO: [community]
         BRANCH: [unstable]
     steps:
-      - name: install_build-dependencies
+      - name: install build-dependencies
         run: |
           sudo apt-get update
           sudo apt-get install \
@@ -29,7 +29,7 @@ jobs:
           python3-pip
           sudo pip3 install meson
           sudo pip3 install ninja
-      - name: install_pacman
+      - name: install pacman
         env:
           PACMAN_VERSION: 6.0.1
         run: |
@@ -54,7 +54,7 @@ jobs:
           sudo mkdir -p /etc/pacman.d
           sudo touch /etc/pacman.d/mirrorlist
           popd
-      - name: install_keyrings
+      - name: install keyrings
         run: |
           sudo git clone --depth 1 https://gitlab.manjaro.org/packages/core/manjaro-keyring.git
           pushd manjaro-keyring
@@ -72,45 +72,42 @@ jobs:
           popd
           sudo pacman-key --init
           sudo pacman-key --populate archlinux manjaro
-      - name: install_manjaro-chrootbuild
+      - name: install manjaro-chrootbuild
         run: |
           sudo git clone --depth 1 https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
           pushd manjaro-chrootbuild
-          sudo ./install.sh
-          echo 'PACKAGER="Manjaro Build Server <build@manjaro.org>"' | sudo tee -a /etc/makepkg.conf > /dev/null
+          sudo ./install.sh "PACKAGER = Manjaro Build Server <build@manjaro.org>"
           popd
-      - name: clone_repo
-        env:
-          PACKAGE: palemoon-bin
-          REPO: community
+      - name: clone package repo
         run: |
           sudo git clone https://gitlab.manjaro.org/packages/${{ matrix.repo }}/${{ matrix.package }}.git
-      - name: build_package
+      - name: build package
         run: |
           sudo chrootbuild -p ${{ matrix.package }}
-      - name: gpg_sign
+      - name: sign package
         shell: bash -O extglob {0}
-        run: |
+        run: |      
           cat <(echo -e "${{ secrets.CI_PRIV_KEY }}" | base64 --decode) | gpg --batch --import &>/dev/null
           for p in $(find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
-            gpg --pinentry-mode loopback --passphrase "${{ secrets.CI_GPG_PASSPHRASE }}" --detach-sign ${p}
-          done
-      - name: create_transaction_file
-        shell: bash -O extglob {0}
-        run: |
-          echo "sha256_pkg: $(sha256sum ${{ matrix.package }}*.zst | cut -d' ' -f1)" > tranaction.yml
-          echo "sha256_sig: $(sha256sum ${{ matrix.package }}*.sig | cut -d' ' -f1)" >> tranaction.yml
-          echo "repository: ${{ matrix.repo }}" >> tranaction.yml
-          echo "branch: ${{ matrix.BRANCH }}" >> tranaction.yml
-      - name: publish_package
+            gpg --pinentry-mode loopback --passphrase "${{ secrets.CI_GPG_PASSPHRASE }}" --detach-sign ${p}          
+      - name: write boxit transaction file
         shell: bash -O extglob {0}
         run: |
           _ver=$(grep ^pkgver= ${{ matrix.package }}/PKGBUILD | cut -d'=' -f2)
           _rel=$(grep ^pkgrel= ${{ matrix.package }}/PKGBUILD | cut -d'=' -f2)
-          _tag=${_ver}-${_rel}
+          _tag=${_ver}-${_rel} 
+          _file=${{ matrix.package }}-${_tag} 
+          echo "sha256_pkg: $(sha256sum ${{ matrix.package }}*.zst | cut -d' ' -f1)" > ${_file}.yml
+          echo "sha256_sig: $(sha256sum ${{ matrix.package }}*.sig | cut -d' ' -f1)" >> ${_file}.yml
+          echo "repository: ${{ matrix.repo }}" >> ${_file}.yml
+          echo "branch: ${{ matrix.BRANCH }}" >> ${_file}.yml
+          echo "TAG=${_tag}" >>$GITHUB_ENV
+          echo "FILE=${_file}" >>$GITHUB_ENV
+      - name: publish package
+        shell: bash -O extglob {0}
+        run: |
+          tar -czvf ${{ env.FILE }}.tar ./${{ env.FILE }}*.zst ./${{ env.FILE }}*.sig ./${{ env.FILE }}.yml
           echo ${{ github.token }} | gh auth login --with-token
-          gh release create ${_tag} --title ${_tag} --repo ${{ github.repository }} --notes "automated release" || echo "release already exists"
-          GITHUB_LINK=https://github.com/${GITHUB_REPOSITORY}/releases/download/${_tag}
-          gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst
-          gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.sig
-          gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.yml
+          gh release create ${{ env.TAG }} --title ${{ env.TAG }} --repo ${{ github.repository }} --notes "automated release" || echo "release already exists"
+          GITHUB_LINK=https://github.com/${GITHUB_REPOSITORY}/releases/download/${{ env.TAG }}
+          gh release upload ${{ env.TAG }} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst ./*.sig ./*.yml ./${{ env.FILE }}.tar
