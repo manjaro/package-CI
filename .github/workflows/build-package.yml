@@ -86,6 +86,14 @@ jobs:
       - id: build_package
         run: |
           sudo chrootbuild -p ${{ matrix.package }}
+      - id: gpg_sign
+        shell: bash -O extglob {0}
+        run: |
+          echo "## gpg signing"
+          cat <(echo -e "${{ secrets.CI_PRIV_KEY }}" | base64 --decode) | gpg --batch --import &>/dev/null
+          for p in $find $PWD -maxdepth 1 -regex '.*\.pkg\.tar\.\(xz\|zst\)'); do
+            gpg --pinentry-mode loopback --passphrase "${{ secrets.CI_GPG_PASSPHRASE }}" --detach-sign ${p}
+          done
       - id: publish_package
         shell: bash -O extglob {0}
         run: |
@@ -96,3 +104,4 @@ jobs:
           gh release create ${_tag} --title ${_tag} --repo ${{ github.repository }} --notes "automated release" || echo "release already exists"
           GITHUB_LINK=https://github.com/${GITHUB_REPOSITORY}/releases/download/${_tag}
           gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst
+          gh release upload ${_tag} --repo ${GITHUB_REPOSITORY} --clobber ./*.sig
