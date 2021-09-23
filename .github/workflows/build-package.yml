@@ -110,4 +110,4 @@ jobs:
           echo ${{ github.token }} | gh auth login --with-token
           gh release create ${{ env.TAG }} --title ${{ env.TAG }} --repo ${{ github.repository }} --notes "automated release" || echo "release already exists"
           GITHUB_LINK=https://github.com/${GITHUB_REPOSITORY}/releases/download/${{ env.TAG }}
-          gh release upload ${{ env.TAG }} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst ./*.sig ./*.yml ./${{ env.FILE }}.tar
+          gh release upload ${{ env.TAG }} --repo ${GITHUB_REPOSITORY} --clobber ./*.zst ./*.sig ./${{ env.FILE }}.tar
