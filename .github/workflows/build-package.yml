@@ -13,14 +13,14 @@ jobs:
           gpg-passphrase: ${{ secrets.CI_GPG_PASSPHRASE }}
         
 ######### EDIT:
-          pkgname: qt5-base
+          package: nvidia-utils
           repo: extra
 
 ######### OPTIONAL EDIT:
           ## non-standard source: (default: https://gitlab.manjaro.org/packages/$repo/$pkgname.git)
           # source: https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
           ## branch: (default: unstable)
-          branch: testing
+          # branch: testing
           ## multilib: (default: false)
           # multilib: true
           ## custom repo: (default: none)
