@@ -9,8 +9,8 @@ jobs:
     steps:
       - uses: manjaro/manjaro-pkg-action@main
         with:
-          pkgname: palemoon-bin
-          repo: community
+          pkgname: manjaro-chrootbuild
+          repo: extra
           arch: x86_64
           gpg-key: ${{ secrets.CI_PRIV_KEY }}
           gpg-passphrase: ${{ secrets.CI_GPG_PASSPHRASE }}
