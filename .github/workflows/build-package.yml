@@ -7,7 +7,7 @@ jobs:
   build-pkg:
     runs-on: ubuntu-20.04
     steps:
-      - uses: manjaro/manjaro-pkg-action@master
+      - uses: manjaro/manjaro-pkg-action@main
         with:
           pkgname: palemoon-bin
           repo: community
