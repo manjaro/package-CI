@@ -11,7 +11,6 @@ jobs:
         with:
           pkgname: manjaro-chrootbuild
           repo: extra
-          arch: x86_64
           gpg-key: ${{ secrets.CI_PRIV_KEY }}
           gpg-passphrase: ${{ secrets.CI_GPG_PASSPHRASE }}
           branch: unstable
