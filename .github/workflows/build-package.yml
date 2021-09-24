@@ -1,4 +1,4 @@
-name: build_pkg
+name: Build package
 
 on:
   workflow_dispatch:
@@ -9,12 +9,15 @@ jobs:
     steps:
       - uses: manjaro/manjaro-pkg-action@main
         with:
-          pkgname: manjaro-chrootbuild
-          repo: extra
           gpg-key: ${{ secrets.CI_PRIV_KEY }}
           gpg-passphrase: ${{ secrets.CI_GPG_PASSPHRASE }}
-          branch: unstable
-          
-          # the following is only needed if non-standard
-          # default source: https://gitlab.manjaro.org/packages/$repo/$pkgname.git
+        
+######### EDIT:
+          pkgname: manjaro-chrootbuild
+          repo: extra
+
+######### OPTIONAL EDIT:
+          ## non-standard source: (default: https://gitlab.manjaro.org/packages/$repo/$pkgname.git)
           source: https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
+          ## branch: (default: unstable)
+          # branch: unstable
