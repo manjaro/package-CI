@@ -16,5 +16,5 @@ jobs:
           branch: unstable
           
           # the following is only needed if non-standard
-          # defaults source: https://gitlab.manjaro.org/packages/$repo/$pkgname.git
+          # default source: https://gitlab.manjaro.org/packages/$repo/$pkgname.git
           source: https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
