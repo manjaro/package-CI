@@ -19,13 +19,12 @@ jobs:
 ######### EDIT:
           package: manjaro-cli
           repo: community
-
 ######### OPTIONAL EDIT:
           ## non-standard source: (default: https://gitlab.manjaro.org/packages/$repo/$pkgname.git)
-          # source: https://gitlab.manjaro.org/tools/development-tools/manjaro-chrootbuild
+          source:
           ## branch: (default: unstable)
           # branch: testing
           ## multilib: (default: false)
           # multilib: true
-          ## custom package: manjaro-cli
-          # package: manjaro-cli
+          ## custom-repo: manjaro-cli
+          # cusom-repo: kde-unstable
