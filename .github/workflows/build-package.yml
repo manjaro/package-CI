@@ -19,12 +19,11 @@ jobs:
 ######### EDIT:
           package: manjaro-cli
           repo: community
-######### OPTIONAL EDIT:
-          ## non-standard source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
+          ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
           source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
           ## branch: (default: unstable)
-          # branch: testing
+          branch: unstable
           ## multilib: (default: false)
-          # multilib: true
-          ## custom-repo: manjaro-cli
-          # cusom-repo: kde-unstable
+          multilib: false
+          ## custom-repo - default: ""
+          custom-repo: ""
