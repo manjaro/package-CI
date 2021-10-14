@@ -17,13 +17,13 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: wrapland
+          package: discover-software-center-jak
           repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          package: https://gitlab.manjaro.org/packages/extra/kde/wrapland
+          source: https://gitlab.manjaro.org/packages/community/jade/discover-software-center-jak
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
           multilib: false
           ## custom-repo - default: ""
-          custom-repo: community
+          custom-repo: ""
