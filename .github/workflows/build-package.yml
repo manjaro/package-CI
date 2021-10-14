@@ -18,7 +18,7 @@ jobs:
         
 ######### EDIT:
           package: palemoon-bin
-          repo: community
+          package: community
 
 ######### OPTIONAL EDIT:
           ## non-standard source: (default: https://gitlab.manjaro.org/packages/$repo/$pkgname.git)
@@ -27,5 +27,5 @@ jobs:
           # branch: testing
           ## multilib: (default: false)
           # multilib: true
-          ## custom repo: (default: none)
-          # repo: kde-unstable
+          ## custom package: community
+          # package: community
