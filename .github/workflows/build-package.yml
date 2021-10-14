@@ -20,7 +20,7 @@ jobs:
           package: manjaro-cli
           repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
+          source: https://gitlab.manjaro.org/packages/community/jade/discover-software-center-jak
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
