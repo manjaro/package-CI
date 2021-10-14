@@ -20,8 +20,8 @@ jobs:
           package: manjaro-cli
           repo: community
 ######### OPTIONAL EDIT:
-          ## non-standard source: htps://gitlab.manjaro.org/packages/community/jade/manjaro-cli
-          source: htps://gitlab.manjaro.org/packages/community/jade/manjaro-cli
+          ## non-standard source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
+          source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
           ## branch: (default: unstable)
           # branch: testing
           ## multilib: (default: false)
