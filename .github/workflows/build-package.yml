@@ -17,10 +17,10 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: wrapland
-          repo: community
+          package: disman
+          repo: extra
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: https://gitlab.manjaro.org/packages/extra/kde/wrapland
+          source: https://gitlab.manjaro.org/packages/extra/kde/disman
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
