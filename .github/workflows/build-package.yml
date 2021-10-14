@@ -17,8 +17,8 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: palemoon-bin
-          package: community
+          package: manjaro-cli
+          package: manjaro-cli
 
 ######### OPTIONAL EDIT:
           ## non-standard source: (default: https://gitlab.manjaro.org/packages/$repo/$pkgname.git)
@@ -27,5 +27,5 @@ jobs:
           # branch: testing
           ## multilib: (default: false)
           # multilib: true
-          ## custom package: community
-          # package: community
+          ## custom package: manjaro-cli
+          # package: manjaro-cli
