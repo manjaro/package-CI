@@ -17,7 +17,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: manjaro-cli
+          package: discover-software-center-jak
           repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
           source: https://gitlab.manjaro.org/packages/community/jade/discover-software-center-jak
