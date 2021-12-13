@@ -17,10 +17,10 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: filesystem
-          repo: core
+          package: manjaro-cli
+          repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: 
+          source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
@@ -28,4 +28,4 @@ jobs:
           ## custom-repo - default: ""
           custom-repo: ""
 
-# built Thu 09 Dec 2021 04:25:21 PM CET
+# built Mon 13 Dec 2021 04:34:08 AM CET
