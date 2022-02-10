@@ -17,10 +17,10 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: palemoon-bin
-          repo: community
+          package: wrapland
+          repo: extra
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: 
+          source: https://gitlab.manjaro.org/packages/extra/kde/wrapland
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
@@ -28,4 +28,4 @@ jobs:
           ## custom-repo - default: ""
           custom-repo: ""
 
-# built Tue 18 Jan 2022 09:04:41 PM CET
+# built Thu 10 Feb 2022 11:23:15 PM CET
