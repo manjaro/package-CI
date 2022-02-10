@@ -17,10 +17,10 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: disman
+          package: kdisplay
           repo: extra
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: https://gitlab.manjaro.org/packages/extra/kde/disman
+          source: https://gitlab.manjaro.org/packages/extra/kde/kdisplay
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
@@ -28,4 +28,4 @@ jobs:
           ## custom-repo - default: ""
           custom-repo: ""
 
-# built Thu 10 Feb 2022 11:24:23 PM CET
+# built Thu 10 Feb 2022 11:25:07 PM CET
