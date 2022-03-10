@@ -17,10 +17,10 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: kwinft
-          repo: extra
+          package: manjaro-cli
+          repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: https://gitlab.manjaro.org/packages/extra/kde/kwinft
+          source: https://gitlab.manjaro.org/packages/community/jade/manjaro-cli
           ## branch: (default: unstable)
           branch: unstable
           ## multilib: (default: false)
@@ -28,4 +28,4 @@ jobs:
           ## custom-repo - default: ""
           custom-repo: ""
 
-# built Thu 10 Feb 2022 11:26:22 PM CET
+# built Thu 10 Mar 2022 08:38:43 PM CET
