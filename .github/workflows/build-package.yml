@@ -17,8 +17,8 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: manjaro-settings-manager
-          repo: extra
+          package: palemoon-bin
+          repo: community
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
           source: 
           ## branch: (default: unstable)
@@ -28,4 +28,4 @@ jobs:
           ## custom-repo - default: ""
           custom-repo: ""
 
-# built Sun 17 Apr 2022 01:12:44 AM CEST
+# built Wed 20 Apr 2022 11:05:25 PM CEST
