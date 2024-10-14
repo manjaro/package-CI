@@ -17,7 +17,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_PACKAGE_CI }}
         
 ######### EDIT:
-          package: curl
+          package: package-CI
           repo: core
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
           source: https://github.com/manjaro/package-CI
