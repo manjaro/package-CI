@@ -20,7 +20,7 @@ jobs:
           package: curl
           repo: core
           ## non-standard path to source repo - default: https://gitlab.manjaro.org/packages/$repo/$package
-          source: https://github.com/manjaro/package-CI/pkgbuilds/core
+          source: https://github.com/manjaro/package-CI/pkgbuilds/core/curl
           ## branch: (default: unstable)
           branch: stable
           ## multilib: (default: false)
