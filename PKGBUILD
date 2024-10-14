@@ -1,0 +1,1 @@
+pkgbuilds/core/curl/PKGBUILD
